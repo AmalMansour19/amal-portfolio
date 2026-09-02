@@ -1,4 +1,52 @@
+
+import { useEffect, useState } from "react";
+
 function Hero() {
+
+    const texts = ["Amal Mansour", "React Front-End Developer"];
+
+    const [textIndex, setTextIndex] = useState(0);
+    const [displayText, setDisplayText] = useState("");
+    const [isDeleting, setIsDeleting] = useState(false);
+
+    useEffect(() => {
+        const currentText = texts[textIndex];
+
+        const delay =
+            !isDeleting && displayText === currentText
+                ? 1500
+                : isDeleting
+                    ? 70
+                    : 110;
+
+        const timer = setTimeout(() => {
+            if (!isDeleting) {
+                // Typing
+                if (displayText.length < currentText.length) {
+                    setDisplayText(
+                        currentText.slice(0, displayText.length + 1)
+                    );
+                } else {
+                    // Finished typing → wait, then start deleting
+                    setIsDeleting(true);
+                }
+            } else {
+                // Deleting
+                if (displayText.length > 0) {
+                    setDisplayText(
+                        currentText.slice(0, displayText.length - 1)
+                    );
+                } else {
+                    // Finished deleting → move to next text
+                    setIsDeleting(false);
+                    setTextIndex((prev) => (prev + 1) % texts.length);
+                }
+            }
+        }, delay);
+
+        return () => clearTimeout(timer);
+    }, [displayText, isDeleting, textIndex]);
+
     return (
         <section
             id="home"
@@ -41,18 +89,14 @@ function Hero() {
                         </span>
                     </div>
 
-                    {/* Eyebrow */}
-                    <p className="mb-4 text-xs font-semibold uppercase tracking-[0.3em] text-[#22D3EE] sm:mb-5 sm:text-sm sm:tracking-[0.35em]">
-                        React Front-End Developer
-                    </p>
-
-                    {/* Heading */}
+                    {/* ================= HEADING ================= */}
                     <h1 className="text-5xl font-bold leading-[0.98] tracking-[-0.045em] text-white sm:text-6xl md:text-7xl lg:text-7xl xl:text-[82px]">
                         Hi, I'm
                         <br />
 
-                        <span className="mt-2 inline-block bg-gradient-to-r from-[#2563EB] via-[#22D3EE] to-[#10B981] bg-clip-text text-transparent">
-                            Amal Mansour
+                        <span className="mt-2 inline-block min-h-[1em] bg-gradient-to-r from-[#2563EB] via-[#22D3EE] to-[#10B981] bg-clip-text text-transparent">
+                            {displayText}
+                            <span className="ml-1 inline-block h-[0.8em] w-[3px] animate-pulse bg-[#22D3EE] align-middle" />
                         </span>
                     </h1>
 
@@ -342,3 +386,4 @@ function Hero() {
 }
 
 export default Hero;
+
