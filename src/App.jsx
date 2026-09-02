@@ -7,8 +7,6 @@ import Services from "./section/Services";
 import TechMarquee from "./section/TechMarquee";
 import Skills from "./section/Skills";
 import Projects from "./section/Projects";
-import Journey from "./section/Journey";
-import CTA from "./section/CTA";
 import Footer from "./section/Footer";
 import Contact from "./section/Contact";
 
@@ -24,8 +22,6 @@ return(
     <Skills/>
     
     <Projects/>
-    <Journey/>
-    <CTA/>
     <Contact />
    <Footer/>
   </>
