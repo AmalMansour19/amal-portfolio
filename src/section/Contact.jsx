@@ -1,7 +1,7 @@
 
 import { useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
-import SectionHeading from "../components/SectionHeading";
+import SectionHeading from "../Components/SectionHeading";
 
 function Contact() {
     const formRef = useRef(null);
