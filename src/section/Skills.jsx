@@ -1,4 +1,4 @@
-import SectionHeading from "../components/SectionHeading";
+import SectionHeading from "../Components/SectionHeading";
 
 const skills = [
     "HTML5",

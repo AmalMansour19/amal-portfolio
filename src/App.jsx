@@ -1,12 +1,7 @@
 
 
 import Navbar from "./Components/Navbar";
-// import Contact from "./Components/Contact";
 import Hero from "./section/Hero";
-// import Skills from "./Components/Skills";
-// import Projects from "./Components/Projects";
-// import Footer from "./Components/Footer";
-import "./App.css";
 import About from "./section/About";
 import Services from "./section/Services";
 import TechMarquee from "./section/TechMarquee";

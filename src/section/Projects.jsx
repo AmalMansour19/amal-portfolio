@@ -1,4 +1,4 @@
-import SectionHeading from "../components/SectionHeading";
+import SectionHeading from "../Components/SectionHeading";
 import eventoraImage from "../assets/eventora.png";
 import store from "../assets/store.png";
 import dashboardImage from "../assets/dashboard.png";
