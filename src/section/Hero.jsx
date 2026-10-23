@@ -1,5 +1,5 @@
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useLanguage } from "../context/LanguageContext";
 import "./Hero.css";
 
@@ -19,7 +19,11 @@ const roles = {
 function Hero() {
     const { language, isArabic, t } = useLanguage();
     const hero = t.hero;
-    const currentRoles = roles[language] ?? roles.en;
+
+    const currentRoles = useMemo(
+        () => roles[language] ?? roles.en,
+        [language]
+    );
 
     const [roleIndex, setRoleIndex] = useState(0);
     const [displayText, setDisplayText] = useState("");
@@ -84,15 +88,16 @@ function Hero() {
                 <div className="hero-orbit hero-orbit-delayed absolute right-[12%] top-[17%] h-44 w-44 rounded-full border border-[#D96535]/10 sm:h-60 sm:w-60" />
             </div>
 
-            <div className="mx-auto grid w-full max-w-7xl items-center gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16 xl:gap-20">
-                {/* Text */}
-                <div className="hero-content relative z-10 order-2 max-w-2xl lg:order-1">
-                    <p className="hero-reveal hero-delay-1 mb-5 flex items-center gap-3 text-xs font-medium uppercase tracking-[0.2em] text-[#D5B895] sm:text-sm">
+            <div className="mx-auto grid w-full max-w-7xl items-center gap-8 sm:gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16 xl:gap-20">
+
+                {/* Text — first on mobile */}
+                <div className="hero-content relative z-10 order-1 max-w-2xl lg:order-1">
+                    <p className="hero-reveal hero-delay-1 mb-4 flex items-center gap-3 text-xs font-medium uppercase tracking-[0.2em] text-[#D5B895] sm:mb-5 sm:text-sm">
                         <span className="h-px w-8 shrink-0 bg-[#D96535]" />
                         {hero.eyebrow}
                     </p>
 
-                    <h1 className="hero-reveal hero-delay-2 text-[clamp(2.8rem,6vw,5rem)] font-semibold leading-[1.15] tracking-[-0.035em] sm:text-6xl xl:text-[76px]">
+                    <h1 className="hero-reveal hero-delay-2 text-[clamp(2.5rem,8vw,4rem)] font-semibold leading-[1.15] tracking-[-0.035em] sm:text-6xl xl:text-[76px]">
                         {hero.titleStart}
                         <br />
 
@@ -107,7 +112,7 @@ function Hero() {
 
                     {/* Typing animation */}
                     <div
-                        className="hero-reveal hero-delay-3 mt-7 flex min-h-8 items-center gap-2 text-sm font-medium text-[#E2C8A8] sm:text-base"
+                        className="hero-reveal hero-delay-3 mt-5 flex min-h-8 items-center gap-2 text-sm font-medium text-[#E2C8A8] sm:mt-7 sm:text-base"
                         aria-live="polite"
                     >
                         <span className="relative flex h-2 w-2 shrink-0">
@@ -115,7 +120,9 @@ function Hero() {
                             <span className="relative inline-flex h-2 w-2 rounded-full bg-[#D96535]" />
                         </span>
 
-                        <span>{displayText || currentRoles[roleIndex]}</span>
+                        <span className="break-words">
+                            {displayText || currentRoles[roleIndex]}
+                        </span>
 
                         <span
                             className="typing-cursor inline-block h-5 w-px shrink-0 bg-[#D96535]"
@@ -123,15 +130,15 @@ function Hero() {
                         />
                     </div>
 
-                    <p className="hero-reveal hero-delay-4 mt-5 max-w-lg text-sm leading-7 text-[#B6A99A] sm:text-base sm:leading-8">
+                    <p className="hero-reveal hero-delay-4 mt-4 max-w-lg text-sm leading-7 text-[#B6A99A] sm:mt-5 sm:text-base sm:leading-8">
                         {hero.description}
                     </p>
 
                     {/* CTA buttons */}
-                    <div className="hero-reveal hero-delay-5 mt-8 flex flex-wrap gap-3">
+                    <div className="hero-reveal hero-delay-5 mt-6 flex flex-wrap gap-3 sm:mt-8">
                         <a
                             href="#work"
-                            className="hero-primary-btn group inline-flex items-center gap-4 rounded-lg bg-[#D96535] px-6 py-3.5 text-sm font-semibold text-white"
+                            className="hero-primary-btn group inline-flex items-center gap-3 rounded-lg bg-[#D96535] px-5 py-3 text-sm font-semibold text-white sm:gap-4 sm:px-6 sm:py-3.5"
                         >
                             {hero.primary}
                             <span
@@ -144,7 +151,7 @@ function Hero() {
 
                         <a
                             href="#contact"
-                            className="hero-secondary-btn group inline-flex items-center gap-3 rounded-lg border border-[#D5B895]/25 px-6 py-3.5 text-sm font-semibold text-[#F4EBDD]"
+                            className="hero-secondary-btn group inline-flex items-center gap-3 rounded-lg border border-[#D5B895]/25 px-5 py-3 text-sm font-semibold text-[#F4EBDD] sm:px-6 sm:py-3.5"
                         >
                             {hero.secondary}
                             <span
@@ -157,9 +164,11 @@ function Hero() {
                     </div>
 
                     {/* Professional development */}
-                    <div className="hero-reveal hero-delay-6 mt-9 flex flex-wrap items-center gap-x-5 gap-y-3 border-t border-white/10 pt-5">
+                    <div className="hero-reveal hero-delay-6 mt-7 flex flex-wrap items-center gap-x-5 gap-y-3 border-t border-white/10 pt-5 sm:mt-9">
                         <span className="text-xs uppercase tracking-[0.12em] text-[#8F8172]">
-                            {isArabic ? "التطوير المهني" : "Professional Development"}
+                            {isArabic
+                                ? "التطوير المهني"
+                                : "Professional Development"}
                         </span>
 
                         {["ITI", "DEPI"].map((name) => (
@@ -197,15 +206,15 @@ function Hero() {
                     </div>
                 </div>
 
-                {/* Portrait */}
-                <div className="hero-portrait-wrap relative order-1 mx-auto w-full max-w-[320px] sm:max-w-[360px] lg:order-2 lg:max-w-[400px] xl:max-w-[430px]">
+                {/* Portrait — after text on mobile */}
+                <div className="hero-portrait-wrap relative order-2 mx-auto w-full max-w-[280px] sm:max-w-[320px] lg:order-2 lg:max-w-[400px] xl:max-w-[430px]">
                     <div
-                        className="hero-ring pointer-events-none absolute -right-4 -top-4 h-28 w-28 rounded-tr-[2rem] border-r border-t border-[#D96535]/50 sm:-right-6 sm:-top-6 sm:h-36 sm:w-36"
+                        className="hero-ring pointer-events-none absolute -right-4 -top-4 h-24 w-24 rounded-tr-[2rem] border-r border-t border-[#D96535]/50 sm:-right-6 sm:-top-6 sm:h-36 sm:w-36"
                         aria-hidden="true"
                     />
 
                     <div
-                        className="hero-ring hero-ring-bottom pointer-events-none absolute -bottom-4 -left-4 h-28 w-28 rounded-bl-[2rem] border-b border-l border-[#D5B895]/40 sm:-bottom-6 sm:-left-6 sm:h-36 sm:w-36"
+                        className="hero-ring hero-ring-bottom pointer-events-none absolute -bottom-4 -left-4 h-24 w-24 rounded-bl-[2rem] border-b border-l border-[#D5B895]/40 sm:-bottom-6 sm:-left-6 sm:h-36 sm:w-36"
                         aria-hidden="true"
                     />
 
@@ -230,14 +239,16 @@ function Hero() {
                     </div>
 
                     {/* Photo caption */}
-                    <div className="mt-5 flex flex-wrap items-center justify-between gap-3 border-b border-[#D5B895]/20 pb-4">
+                    <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border-b border-[#D5B895]/20 pb-4 sm:mt-5">
                         <div>
                             <p className="text-sm font-medium tracking-wide text-[#E7D7C4]">
                                 Amal Mansour
                             </p>
 
                             <p className="mt-1 text-xs text-[#A99A89]">
-                                {isArabic ? "تطوير الواجهات الأمامية" : "Frontend Development"}
+                                {isArabic
+                                    ? "تطوير الواجهات الأمامية"
+                                    : "Frontend Development"}
                             </p>
                         </div>
 
