@@ -1,109 +1,62 @@
-import { useState } from "react";
 
-const navLinks = [
-    { name: "Home", href: "#home" },
-    { name: "Work", href: "#work" },
-    { name: "About", href: "#about" },
-    { name: "Services", href: "#services" },
-    { name: "Contact", href: "#contact" },
-];
+import { useLanguage } from "../context/LanguageContext";
 
-function Navbar() {
-    const [isOpen, setIsOpen] = useState(false);
+export default function Navbar() {
+    const { t, language, toggleLanguage } = useLanguage();
 
-    const handleLinkClick = () => {
-        setIsOpen(false);
-    };
+    const links = [
+        { label: t.nav.home, href: "#home" },
+        { label: t.nav.work, href: "#work" },
+        { label: t.nav.about, href: "#about" },
+        { label: t.nav.skills, href: "#skills" },
+        { label: t.nav.education, href: "#education" },
+        { label: t.nav.contact, href: "#contact" },
+    ];
 
     return (
-        <header className="fixed left-0 top-0 z-50 w-full border-b border-white/[0.04] bg-[#080B12]/80 backdrop-blur-xl">
-            <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-10">
-
-                {/* Logo */}
+        <header className="fixed top-0 z-50 w-full border-b border-[#D5B895]/10 bg-[#171411]/90 text-[#F4EBDD] backdrop-blur-xl">
+            <nav className="mx-auto flex min-h-[72px] max-w-7xl items-center justify-between gap-4 px-5 md:px-8">
                 <a
                     href="#home"
-                    onClick={handleLinkClick}
-                    className="flex items-center gap-1 text-lg font-bold tracking-tight text-white"
+                    className="text-xl font-bold tracking-wide text-[#D5B895]"
                 >
-                    <span className="text-[#22D3EE]">AMAL</span>
-                    <span>Mansour.</span>
+                    AMAL<span className="text-[#D96535]">.</span>
                 </a>
 
-                {/* Desktop Navigation */}
-                <div className="hidden items-center gap-8 md:flex">
-                    {navLinks.map((link) => (
+                <div className="hidden items-center gap-6 lg:flex">
+                    {links.map((link) => (
                         <a
-                            key={link.name}
+                            key={link.href}
                             href={link.href}
-                            className="relative text-sm text-slate-400 transition-colors duration-300 hover:text-white"
+                            className="text-sm text-[#B6A99A] transition hover:text-[#E47746]"
                         >
-                            {link.name}
+                            {link.label}
                         </a>
                     ))}
                 </div>
 
-                {/* Desktop CTA */}
-                <a
-                    href="#contact"
-                    className="group hidden items-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-2.5 text-sm font-medium text-white backdrop-blur-md transition-all duration-300 hover:border-[#22D3EE]/40 hover:bg-[#22D3EE]/10 md:flex"
-                >
-                    Let's Talk
+                <div className="flex items-center gap-3">
+                    <button
+                        type="button"
+                        onClick={toggleLanguage}
+                        aria-label={
+                            language === "en"
+                                ? "Switch to Arabic"
+                                : "Switch to English"
+                        }
+                        className="rounded-full border border-[#D5B895]/30 px-3 py-2 text-sm font-semibold transition hover:border-[#D96535] hover:text-[#E47746]"
+                    >
+                        {t.nav.language}
+                    </button>
 
-                    <span className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5">
-                        ↗
-                    </span>
-                </a>
-
-                {/* Mobile Menu Button */}
-                <button
-                    type="button"
-                    onClick={() => setIsOpen(!isOpen)}
-                    className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white transition hover:border-[#22D3EE]/40 hover:bg-[#22D3EE]/10 md:hidden"
-                    aria-label={isOpen ? "Close menu" : "Open menu"}
-                    aria-expanded={isOpen}
-                >
-                    <span className="text-lg">
-                        {isOpen ? "✕" : "☰"}
-                    </span>
-                </button>
-            </nav>
-
-            {/* Mobile Menu */}
-            <div
-                className={`overflow-hidden border-t border-white/[0.04] bg-[#080B12]/95 backdrop-blur-xl transition-all duration-300 md:hidden ${isOpen
-                        ? "max-h-[400px] opacity-100"
-                        : "max-h-0 opacity-0"
-                    }`}
-            >
-                <div className="mx-auto max-w-7xl px-6 py-5">
-
-                    <div className="flex flex-col gap-1">
-                        {navLinks.map((link) => (
-                            <a
-                                key={link.name}
-                                href={link.href}
-                                onClick={handleLinkClick}
-                                className="rounded-xl px-4 py-3 text-sm text-slate-400 transition-colors duration-300 hover:bg-white/[0.04] hover:text-white"
-                            >
-                                {link.name}
-                            </a>
-                        ))}
-                    </div>
-
-                    {/* Mobile CTA */}
                     <a
                         href="#contact"
-                        onClick={handleLinkClick}
-                        className="mt-4 flex items-center justify-center gap-2 rounded-xl border border-[#22D3EE]/20 bg-[#22D3EE]/10 px-5 py-3 text-sm font-medium text-white transition-all duration-300 hover:bg-[#22D3EE]/20"
+                        className="hidden rounded-full bg-[#D96535] px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-[#E47746] sm:inline-flex"
                     >
-                        Let's Talk
-                        <span>↗</span>
+                        {t.nav.talk}
                     </a>
-
                 </div>
-            </div>
+            </nav>
         </header>
     );
 }
-
-export default Navbar;

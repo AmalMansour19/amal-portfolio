@@ -1,0 +1,402 @@
+
+/* =========================
+   HERO ENTRANCE ANIMATIONS
+========================= */
+
+.hero-reveal {
+    opacity: 0;
+    animation: heroFadeUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.hero-delay-1 {
+    animation-delay: 0.12s;
+}
+
+.hero-delay-2 {
+    animation-delay: 0.24s;
+}
+
+.hero-delay-3 {
+    animation-delay: 0.4s;
+}
+
+.hero-delay-4 {
+    animation-delay: 0.52s;
+}
+
+.hero-delay-5 {
+    animation-delay: 0.64s;
+}
+
+.hero-delay-6 {
+    animation-delay: 0.76s;
+}
+
+@keyframes heroFadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(24px);
+        filter: blur(5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(0);
+    }
+}
+
+/* =========================
+   BACKGROUND GLOW
+========================= */
+
+.hero-glow {
+    will-change: transform;
+    animation: glowFloat 12s ease-in-out infinite alternate;
+}
+
+.hero-glow-two {
+    animation-delay: -6s;
+}
+
+@keyframes glowFloat {
+    from {
+        transform: translate3d(0, 0, 0) scale(1);
+    }
+
+    to {
+        transform: translate3d(35px, -25px, 0) scale(1.12);
+    }
+}
+
+/* Subtle grid texture */
+
+.hero-grid {
+    background-image:
+        linear-gradient(rgba(213, 184, 149, 0.055) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(213, 184, 149, 0.055) 1px, transparent 1px);
+    background-size: 54px 54px;
+    mask-image: linear-gradient(to bottom, black, transparent 85%);
+}
+
+/* Decorative orbit rings */
+
+.hero-orbit {
+    animation: orbitPulse 8s ease-in-out infinite;
+}
+
+.hero-orbit-delayed {
+    animation-delay: -4s;
+}
+
+@keyframes orbitPulse {
+
+    0%,
+    100% {
+        opacity: 0.35;
+        transform: scale(1) rotate(0deg);
+    }
+
+    50% {
+        opacity: 0.8;
+        transform: scale(1.04) rotate(8deg);
+    }
+}
+
+/* =========================
+   HEADLINE HIGHLIGHT
+========================= */
+
+.hero-highlight {
+    display: inline-block;
+    text-shadow: 0 0 35px rgba(213, 184, 149, 0.08);
+    animation: highlightGlow 5s ease-in-out infinite;
+}
+
+@keyframes highlightGlow {
+
+    0%,
+    100% {
+        text-shadow: 0 0 20px rgba(213, 184, 149, 0.04);
+    }
+
+    50% {
+        text-shadow: 0 0 35px rgba(213, 184, 149, 0.2);
+    }
+}
+
+/* Typing cursor */
+
+.typing-cursor {
+    animation: cursorBlink 0.8s steps(2, start) infinite;
+}
+
+@keyframes cursorBlink {
+    to {
+        opacity: 0;
+    }
+}
+
+/* =========================
+   PORTRAIT ANIMATIONS
+========================= */
+
+.hero-portrait-wrap {
+    opacity: 0;
+    animation:
+        portraitEnter 1s cubic-bezier(0.22, 1, 0.36, 1) 0.3s forwards,
+        portraitFloat 7s ease-in-out 1.3s infinite;
+}
+
+@keyframes portraitEnter {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.97);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes portraitFloat {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-8px);
+    }
+}
+
+.hero-photo {
+    box-shadow: 0 25px 70px rgba(0, 0, 0, 0.22);
+    transition:
+        border-color 0.4s ease,
+        box-shadow 0.4s ease;
+}
+
+.hero-photo img {
+    transition:
+        transform 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+        filter 0.5s ease;
+}
+
+.hero-portrait-wrap:hover .hero-photo {
+    border-color: rgba(213, 184, 149, 0.4);
+    box-shadow: 0 30px 85px rgba(217, 101, 53, 0.1);
+}
+
+.hero-portrait-wrap:hover .hero-photo img {
+    transform: scale(1.035);
+}
+
+.hero-photo-shine {
+    background: linear-gradient(115deg,
+            transparent 20%,
+            rgba(255, 255, 255, 0.055) 45%,
+            transparent 65%);
+    transform: translateX(-120%);
+    transition: transform 0.9s ease;
+}
+
+.hero-portrait-wrap:hover .hero-photo-shine {
+    transform: translateX(120%);
+}
+
+/* Decorative corner movement */
+
+.hero-ring {
+    transition:
+        width 0.4s ease,
+        height 0.4s ease,
+        border-color 0.4s ease;
+}
+
+.hero-portrait-wrap:hover .hero-ring {
+    border-color: rgba(217, 101, 53, 0.75);
+}
+
+.hero-portrait-wrap:hover .hero-ring-bottom {
+    border-color: rgba(213, 184, 149, 0.75);
+}
+
+/* =========================
+   BUTTON INTERACTIONS
+========================= */
+
+.hero-primary-btn {
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 6px 24px rgba(217, 101, 53, 0.12);
+    transition:
+        transform 0.3s ease,
+        background-color 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.hero-primary-btn::before {
+    position: absolute;
+    inset: 0;
+    content: "";
+    background: linear-gradient(110deg,
+            transparent 25%,
+            rgba(255, 255, 255, 0.18) 50%,
+            transparent 75%);
+    transform: translateX(-120%);
+    transition: transform 0.65s ease;
+}
+
+.hero-primary-btn:hover {
+    transform: translateY(-3px);
+    background-color: #e47746;
+    box-shadow: 0 12px 30px rgba(217, 101, 53, 0.25);
+}
+
+.hero-primary-btn:hover::before {
+    transform: translateX(120%);
+}
+
+.hero-primary-btn:hover .hero-arrow {
+    transform: translate(3px, -3px);
+}
+
+.hero-secondary-btn {
+    transition:
+        transform 0.3s ease,
+        border-color 0.3s ease,
+        background-color 0.3s ease;
+}
+
+.hero-secondary-btn:hover {
+    transform: translateY(-3px);
+    border-color: rgba(213, 184, 149, 0.6);
+    background-color: rgba(213, 184, 149, 0.06);
+}
+
+/* Social link underline */
+
+.hero-social-link {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    transition: color 0.25s ease;
+}
+
+.hero-social-link::after {
+    position: absolute;
+    right: 0;
+    bottom: -4px;
+    left: 0;
+    height: 1px;
+    content: "";
+    background-color: #d96535;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+}
+
+.hero-social-link:hover {
+    color: #d5b895;
+}
+
+.hero-social-link:hover::after {
+    transform: scaleX(1);
+}
+
+/* Availability indicator */
+
+.hero-availability {
+    transition:
+        border-color 0.3s ease,
+        background-color 0.3s ease;
+}
+
+.hero-availability:hover {
+    border-color: rgba(213, 184, 149, 0.35);
+    background-color: rgba(213, 184, 149, 0.1);
+}
+
+/* Scroll hint */
+
+.hero-scroll-indicator {
+    animation: scrollHint 2.2s ease-in-out infinite;
+}
+
+.hero-scroll-line {
+    transform-origin: top;
+    animation: scrollLine 2.2s ease-in-out infinite;
+}
+
+@keyframes scrollHint {
+
+    0%,
+    100% {
+        opacity: 0.6;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+@keyframes scrollLine {
+    0% {
+        transform: scaleY(0.45);
+        opacity: 0.4;
+    }
+
+    50% {
+        transform: scaleY(1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scaleY(0.45);
+        opacity: 0.4;
+    }
+}
+
+/* =========================
+   ACCESSIBILITY
+========================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .hero-section *,
+    .hero-section *::before,
+    .hero-section *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+    }
+
+    .hero-reveal,
+    .hero-portrait-wrap {
+        opacity: 1;
+        filter: none;
+    }
+}
+
+/* Smaller screens */
+
+@media (max-width: 640px) {
+    .hero-grid {
+        background-size: 38px 38px;
+    }
+
+    .hero-orbit {
+        right: -50px;
+        top: 6%;
+    }
+
+    .hero-portrait-wrap {
+        max-width: 310px;
+    }
+}
+

@@ -1,36 +1,33 @@
 
-
 import Navbar from "./Components/Navbar";
+
 import Hero from "./section/Hero";
 import About from "./section/About";
-import Services from "./section/Services";
-import TechMarquee from "./section/TechMarquee";
 import Skills from "./section/Skills";
+import Services from "./section/Services";
 import Projects from "./section/Projects";
-import Footer from "./section/Footer";
+import Education from "./section/Education";
+import Certifications from "./section/Certifications";
 import Contact from "./section/Contact";
-
+import Footer from "./section/Footer";
 
 function App() {
-return(
-  <>
-   <Navbar/>
-   <Hero/>
-   <TechMarquee/>
-   <About/>
-    <Services/>
-    <Skills/>
-    
-    <Projects/>
-    <Contact />
-   <Footer/>
-  </>
-)
-  
+  return (
+    <>
+      <Navbar />
+      <main>
+        <Hero />
+        <About />
+        <Skills />
+        <Services />
+        <Projects />
+        <Education />
+        <Certifications />
+        <Contact />
+      </main>
+      <Footer />
+    </>
+  );
 }
 
-
-
-
 export default App;
-

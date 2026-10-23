@@ -1,123 +1,165 @@
 
 import SectionHeading from "../Components/SectionHeading";
+import { useLanguage } from "../context/LanguageContext";
 
 const services = [
     {
         number: "01",
-        title: "React Development",
-        description:
-            "Modern React interfaces built with reusable components and clean structure.",
+        title: { en: "React Development", ar: "تطوير واجهات React" },
+        description: {
+            en: "Reusable React components and organized interfaces tailored to your project.",
+            ar: "مكونات React قابلة لإعادة الاستخدام وواجهات منظمة تناسب احتياجات مشروعك.",
+        },
         icon: "</>",
     },
     {
         number: "02",
-        title: "Figma to React",
-        description:
-            "Pixel-focused, responsive React implementation from your Figma designs.",
+        title: { en: "Figma to React", ar: "تحويل Figma إلى React" },
+        description: {
+            en: "Turning design concepts into responsive interfaces with attention to detail.",
+            ar: "تحويل التصميمات إلى واجهات متجاوبة مع الاهتمام بالتفاصيل.",
+        },
         icon: "◈",
     },
     {
         number: "03",
-        title: "Landing Pages",
-        description:
-            "Clean and engaging landing pages built for a smooth experience across devices.",
+        title: { en: "Landing Pages", ar: "صفحات الهبوط" },
+        description: {
+            en: "Modern landing pages with clear layouts and consistent experiences across devices.",
+            ar: "صفحات هبوط عصرية بتصميم واضح وتجربة متناسقة على مختلف الأجهزة.",
+        },
         icon: "✦",
     },
     {
         number: "04",
-        title: "E-Commerce",
-        description:
-            "Responsive storefronts with products, cart, wishlist and essential shopping flows.",
+        title: { en: "E-Commerce Interfaces", ar: "واجهات المتاجر الإلكترونية" },
+        description: {
+            en: "Storefronts with product listings, details, cart and wishlist interfaces.",
+            ar: "واجهات متاجر تشمل عرض المنتجات وتفاصيلها والسلة والمفضلة.",
+        },
         icon: "◇",
     },
     {
         number: "05",
-        title: "API Integration",
-        description:
-            "Connecting React applications with REST APIs and real-world application data.",
-        icon: "⌘",
+        title: { en: "API Integration", ar: "ربط واجهات API" },
+        description: {
+            en: "Integrating REST APIs to display dynamic data in React applications.",
+            ar: "ربط REST APIs لعرض البيانات وتحديثها داخل تطبيقات React.",
+        },
+        icon: "{ }",
     },
     {
         number: "06",
-        title: "React Improvements",
-        description:
-            "Bug fixes, new features, responsive improvements and frontend refinements.",
+        title: { en: "Frontend Improvements", ar: "تحسين الواجهات" },
+        description: {
+            en: "Fixing interface issues, improving responsiveness and refining existing pages.",
+            ar: "إصلاح مشكلات الواجهات وتحسين التجاوب وتطوير الصفحات الحالية.",
+        },
         icon: "↗",
     },
 ];
 
 function Services() {
+    const { isArabic } = useLanguage();
+
     return (
         <section
             id="services"
-            className="relative overflow-hidden bg-[#080B12] px-6 py-24 lg:px-10 lg:py-32"
+            dir={isArabic ? "rtl" : "ltr"}
+            className="relative isolate overflow-hidden bg-[#1D1915] px-5 py-24 text-[#F4EBDD] sm:px-8 lg:px-10 lg:py-28"
         >
-            {/* Background glow */}
-            <div className="pointer-events-none absolute -right-40 top-1/3 h-[500px] w-[500px] rounded-full bg-[#2563EB]/5 blur-[140px]" />
+            <div
+                aria-hidden="true"
+                className="pointer-events-none absolute -right-40 top-1/4 -z-10 h-96 w-96 rounded-full bg-[#D96535]/10 blur-[130px]"
+            />
+            <div
+                aria-hidden="true"
+                className="pointer-events-none absolute -left-40 bottom-0 -z-10 h-80 w-80 rounded-full bg-[#D5B895]/[0.06] blur-[120px]"
+            />
 
-            <div className="relative mx-auto max-w-7xl">
-
+            <div className="mx-auto max-w-7xl">
                 <SectionHeading
-                    eyebrow="Services"
-                    title="What I can help you build."
-                    description="Focused frontend services for modern, responsive and engaging web experiences."
+                    eyebrow={isArabic ? "الخدمات" : "WHAT I DO"}
+                    title={
+                        isArabic
+                            ? "إزاي أقدر أساعدك؟"
+                            : "What I can help you build"
+                    }
+                    description={
+                        isArabic
+                            ? "خدمات تطوير واجهات الويب لإنشاء تجارب رقمية عصرية ومتجاوبة."
+                            : "Frontend services focused on creating modern, responsive and user-friendly web experiences."
+                    }
+                    number="04"
                 />
 
-                <div className="mt-14 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-
+                <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
                     {services.map((service) => (
                         <article
                             key={service.number}
-                            className="group relative flex min-h-[290px] flex-col overflow-hidden rounded-3xl border border-white/[0.08] bg-white/[0.025] p-7 transition-all duration-500 hover:-translate-y-2 hover:border-[#22D3EE]/40 hover:bg-white/[0.045] hover:shadow-[0_20px_60px_rgba(34,211,238,0.12)] sm:p-8"
+                            className="group relative flex min-h-[250px] flex-col overflow-hidden rounded-2xl border border-[#D5B895]/10 bg-[#171411]/70 p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[#D96535]/45 hover:shadow-[0_15px_45px_rgba(217,101,53,0.10)] sm:p-7"
                         >
+                            <div
+                                aria-hidden="true"
+                                className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full bg-[#D96535]/0 blur-[70px] transition-colors duration-500 group-hover:bg-[#D96535]/15"
+                            />
 
-                            {/* Hover glows */}
-                            <div className="pointer-events-none absolute -right-20 -top-20 h-48 w-48 rounded-full bg-[#22D3EE]/0 blur-[70px] transition-all duration-700 group-hover:bg-[#22D3EE]/15" />
-
-                            <div className="pointer-events-none absolute -bottom-24 -left-20 h-40 w-40 rounded-full bg-[#2563EB]/0 blur-[70px] transition-all duration-700 group-hover:bg-[#2563EB]/10" />
-
-                            {/* Header */}
                             <div className="relative flex items-start justify-between">
-
-                                <span className="font-mono text-xs tracking-wider text-slate-600">
-                                    {service.number}
+                                <span className="font-mono text-xs tracking-widest text-[#B6A99A]/60">
+                                    / {service.number}
                                 </span>
 
-                                <span className="flex h-11 w-11 items-center justify-center rounded-xl border border-[#22D3EE]/10 bg-[#22D3EE]/5 font-mono text-sm text-[#22D3EE] transition-all duration-300 group-hover:border-[#22D3EE]/30 group-hover:bg-[#22D3EE]/10 group-hover:shadow-xl group-hover:shadow-[#22D3EE]/20">
+                                <span className="flex h-11 w-11 items-center justify-center rounded-xl border border-[#D96535]/20 bg-[#D96535]/[0.08] font-mono text-sm text-[#D96535] transition-all duration-300 group-hover:border-[#D96535]/50 group-hover:bg-[#D96535]/15 group-hover:shadow-[0_0_25px_rgba(217,101,53,0.12)]">
                                     {service.icon}
                                 </span>
-
                             </div>
 
-                            {/* Content */}
-                            <div className="relative mt-auto">
-
-                                <h3 className="text-xl font-semibold tracking-tight text-white">
-                                    {service.title}
+                            <div className="relative mt-auto pt-8">
+                                <h3 className="text-lg font-semibold tracking-tight text-[#F4EBDD] transition-colors duration-300 group-hover:text-[#D5B895]">
+                                    {service.title[isArabic ? "ar" : "en"]}
                                 </h3>
 
-                                <p className="mt-3 text-sm leading-6 text-slate-500">
-                                    {service.description}
+                                <p className="mt-3 text-sm leading-7 text-[#B6A99A]">
+                                    {service.description[isArabic ? "ar" : "en"]}
                                 </p>
-
                             </div>
 
-                            {/* Bottom */}
-                            <div className="relative mt-6 flex items-center justify-between border-t border-white/[0.06] pt-5">
-
-                                <span className="text-[10px] uppercase tracking-[0.2em] text-slate-600">
-                                    Available
+                            <div className="relative mt-6 flex items-center justify-between border-t border-[#D5B895]/10 pt-4">
+                                <span className="text-[10px] font-medium uppercase tracking-[0.16em] text-[#B6A99A]/60">
+                                    {isArabic ? "متاحة للمشاريع" : "Available for projects"}
                                 </span>
 
-                                <span className="text-sm text-slate-600 transition-all duration-300 group-hover:translate-x-1 group-hover:text-[#22D3EE]">
-                                    →
-                                </span>
-
+                                <a
+                                    href="#contact"
+                                    aria-label={`${isArabic ? "اطلبي الخدمة" : "Discuss service"}: ${service.title[isArabic ? "ar" : "en"]}`}
+                                    className="flex h-8 w-8 items-center justify-center rounded-full border border-[#D5B895]/15 text-sm text-[#D5B895] transition-all duration-300 hover:border-[#D96535] hover:bg-[#D96535] hover:text-[#171411]"
+                                >
+                                    {isArabic ? "←" : "↗"}
+                                </a>
                             </div>
-
                         </article>
                     ))}
+                </div>
 
+                <div className="mt-10 flex flex-col items-start justify-between gap-4 rounded-2xl border border-[#D5B895]/10 bg-[#171411]/60 p-5 sm:flex-row sm:items-center sm:p-6">
+                    <div>
+                        <h3 className="font-semibold text-[#F4EBDD]">
+                            {isArabic ? "عندك فكرة لمشروع؟" : "Have a project in mind?"}
+                        </h3>
+                        <p className="mt-1 text-sm leading-6 text-[#B6A99A]">
+                            {isArabic
+                                ? "خلينا نتكلم عن فكرتك واحتياجات مشروعك."
+                                : "Let's discuss your idea and project requirements."}
+                        </p>
+                    </div>
+
+                    <a
+                        href="#contact"
+                        className="inline-flex shrink-0 items-center gap-2 rounded-full bg-[#D96535] px-5 py-3 text-sm font-semibold text-[#171411] transition-all duration-300 hover:bg-[#E77B4E] hover:shadow-[0_0_25px_rgba(217,101,53,0.2)]"
+                    >
+                        {isArabic ? "تواصلي معي" : "Contact me"}
+                        <span aria-hidden="true">{isArabic ? "←" : "↗"}</span>
+                    </a>
                 </div>
             </div>
         </section>

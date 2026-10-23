@@ -1,389 +1,265 @@
 
 import { useEffect, useState } from "react";
+import { useLanguage } from "../context/LanguageContext";
+import "./Hero.css";
+
+const roles = {
+    en: [
+        "React Frontend Developer",
+        "Web Application Developer",
+        "Frontend Developer with Backend Skills",
+    ],
+    ar: [
+        "مطوّرة واجهات باستخدام React",
+        "مطوّرة تطبيقات ويب",
+        "مطوّرة واجهات مع معرفة بالـ Backend",
+    ],
+};
 
 function Hero() {
+    const { language, isArabic, t } = useLanguage();
+    const hero = t.hero;
+    const currentRoles = roles[language] ?? roles.en;
 
-    const texts = ["Amal Mansour", "React Front-End Developer"];
-
-    const [textIndex, setTextIndex] = useState(0);
+    const [roleIndex, setRoleIndex] = useState(0);
     const [displayText, setDisplayText] = useState("");
     const [isDeleting, setIsDeleting] = useState(false);
 
     useEffect(() => {
-        const currentText = texts[textIndex];
+        setRoleIndex(0);
+        setDisplayText("");
+        setIsDeleting(false);
+    }, [language]);
 
-        const delay =
-            !isDeleting && displayText === currentText
-                ? 1500
-                : isDeleting
-                    ? 70
-                    : 110;
+    useEffect(() => {
+        const currentRole = currentRoles[roleIndex] ?? currentRoles[0];
+
+        const delay = isDeleting
+            ? 35
+            : displayText === currentRole
+                ? 1800
+                : 75;
 
         const timer = setTimeout(() => {
             if (!isDeleting) {
-                // Typing
-                if (displayText.length < currentText.length) {
+                if (displayText.length < currentRole.length) {
                     setDisplayText(
-                        currentText.slice(0, displayText.length + 1)
+                        currentRole.slice(0, displayText.length + 1)
                     );
                 } else {
-                    // Finished typing → wait, then start deleting
                     setIsDeleting(true);
                 }
+            } else if (displayText.length > 0) {
+                setDisplayText(
+                    currentRole.slice(0, displayText.length - 1)
+                );
             } else {
-                // Deleting
-                if (displayText.length > 0) {
-                    setDisplayText(
-                        currentText.slice(0, displayText.length - 1)
-                    );
-                } else {
-                    // Finished deleting → move to next text
-                    setIsDeleting(false);
-                    setTextIndex((prev) => (prev + 1) % texts.length);
-                }
+                setIsDeleting(false);
+                setRoleIndex((prev) => (prev + 1) % currentRoles.length);
             }
         }, delay);
 
         return () => clearTimeout(timer);
-    }, [displayText, isDeleting, textIndex]);
+    }, [displayText, isDeleting, roleIndex, currentRoles]);
 
     return (
         <section
             id="home"
-            className="relative min-h-screen overflow-hidden bg-[#080B12] px-6 pt-28 lg:px-10 lg:pt-24"
+            dir={isArabic ? "rtl" : "ltr"}
+            className="hero-section relative isolate flex items-center overflow-hidden bg-[#171411] px-5 pb-12 pt-28 text-[#F4EBDD] sm:px-8 sm:pb-16 sm:pt-32 lg:min-h-[calc(100svh-72px)] lg:px-12 lg:py-8"
         >
-            {/* ================= BACKGROUND ================= */}
-            <div className="pointer-events-none absolute inset-0">
-                <div className="absolute -left-40 top-10 h-[420px] w-[420px] rounded-full bg-[#2563EB]/10 blur-[150px] sm:h-[500px] sm:w-[500px]" />
+            {/* Animated background */}
+            <div
+                className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
+                aria-hidden="true"
+            >
+                <div className="hero-glow hero-glow-one absolute -left-40 top-10 h-96 w-96 rounded-full bg-[#A66F4E]/15 blur-[120px]" />
 
-                <div className="absolute right-[-180px] top-[15%] h-[450px] w-[450px] rounded-full bg-[#22D3EE]/10 blur-[150px] sm:h-[520px] sm:w-[520px]" />
+                <div className="hero-glow hero-glow-two absolute -right-40 bottom-0 h-96 w-96 rounded-full bg-[#D96535]/10 blur-[130px]" />
 
-                <div className="absolute bottom-[-180px] left-[40%] h-[380px] w-[380px] rounded-full bg-[#10B981]/5 blur-[140px]" />
+                <div className="hero-grid absolute inset-0 opacity-[0.12]" />
+
+                <div className="hero-orbit absolute right-[8%] top-[12%] h-56 w-56 rounded-full border border-[#D5B895]/10 sm:h-72 sm:w-72" />
+
+                <div className="hero-orbit hero-orbit-delayed absolute right-[12%] top-[17%] h-44 w-44 rounded-full border border-[#D96535]/10 sm:h-60 sm:w-60" />
             </div>
 
-            {/* ================= GRID ================= */}
-            <div
-                className="pointer-events-none absolute inset-0 opacity-[0.035]"
-                style={{
-                    backgroundImage:
-                        "linear-gradient(#ffffff 1px, transparent 1px), linear-gradient(90deg, #ffffff 1px, transparent 1px)",
-                    backgroundSize: "70px 70px",
-                }}
-            />
+            <div className="mx-auto grid w-full max-w-7xl items-center gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16 xl:gap-20">
+                {/* Text */}
+                <div className="hero-content relative z-10 order-2 max-w-2xl lg:order-1">
+                    <p className="hero-reveal hero-delay-1 mb-5 flex items-center gap-3 text-xs font-medium uppercase tracking-[0.2em] text-[#D5B895] sm:text-sm">
+                        <span className="h-px w-8 shrink-0 bg-[#D96535]" />
+                        {hero.eyebrow}
+                    </p>
 
-            {/* ================= CONTENT ================= */}
-            <div className="relative z-10 mx-auto grid min-h-[calc(100vh-7rem)] max-w-7xl items-center gap-14 lg:grid-cols-[0.95fr_1.05fr] lg:gap-8">
-
-                {/* ================= LEFT ================= */}
-                <div className="max-w-2xl">
-
-                    {/* Availability */}
-                    <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#22D3EE]/20 bg-[#22D3EE]/5 px-4 py-2 backdrop-blur-md sm:mb-7">
-                        <span className="relative flex h-2 w-2">
-                            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#22D3EE] opacity-50" />
-                            <span className="relative inline-flex h-2 w-2 rounded-full bg-[#22D3EE]" />
-                        </span>
-
-                        <span className="text-xs font-medium tracking-wide text-slate-300">
-                            Available for freelance work
-                        </span>
-                    </div>
-
-                    {/* ================= HEADING ================= */}
-                    <h1 className="text-5xl font-bold leading-[0.98] tracking-[-0.045em] text-white sm:text-6xl md:text-7xl lg:text-7xl xl:text-[82px]">
-                        Hi, I'm
+                    <h1 className="hero-reveal hero-delay-2 text-[clamp(2.8rem,6vw,5rem)] font-semibold leading-[1.15] tracking-[-0.035em] sm:text-6xl xl:text-[76px]">
+                        {hero.titleStart}
                         <br />
 
-                        <span className="mt-2 inline-block min-h-[1em] bg-gradient-to-r from-[#2563EB] via-[#22D3EE] to-[#10B981] bg-clip-text text-transparent">
-                            {displayText}
-                            <span className="ml-1 inline-block h-[0.8em] w-[3px] animate-pulse bg-[#22D3EE] align-middle" />
+                        <span className="hero-highlight font-serif font-normal italic text-[#D5B895]">
+                            {hero.titleHighlight}
                         </span>
+                        <br />
+
+                        {hero.titleEnd}
+                        <span className="text-[#D96535]">.</span>
                     </h1>
 
-                    {/* Main Description */}
-                    <p className="mt-7 max-w-xl text-base leading-8 text-slate-400 sm:text-lg">
-                        I build modern, responsive React websites and turn ideas
-                        and designs into clean, interactive digital experiences.
+                    {/* Typing animation */}
+                    <div
+                        className="hero-reveal hero-delay-3 mt-7 flex min-h-8 items-center gap-2 text-sm font-medium text-[#E2C8A8] sm:text-base"
+                        aria-live="polite"
+                    >
+                        <span className="relative flex h-2 w-2 shrink-0">
+                            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#D96535] opacity-50" />
+                            <span className="relative inline-flex h-2 w-2 rounded-full bg-[#D96535]" />
+                        </span>
+
+                        <span>{displayText || currentRoles[roleIndex]}</span>
+
+                        <span
+                            className="typing-cursor inline-block h-5 w-px shrink-0 bg-[#D96535]"
+                            aria-hidden="true"
+                        />
+                    </div>
+
+                    <p className="hero-reveal hero-delay-4 mt-5 max-w-lg text-sm leading-7 text-[#B6A99A] sm:text-base sm:leading-8">
+                        {hero.description}
                     </p>
 
-                    {/* Supporting Line */}
-                    <p className="mt-3 max-w-lg text-sm leading-7 text-slate-500">
-                        From landing pages and e-commerce interfaces to
-                        API-powered web applications and custom React solutions.
-                    </p>
-
-                    {/* ================= BUTTONS ================= */}
-                    <div className="mt-8 flex flex-wrap gap-4 sm:mt-9">
-
+                    {/* CTA buttons */}
+                    <div className="hero-reveal hero-delay-5 mt-8 flex flex-wrap gap-3">
                         <a
                             href="#work"
-                            className="group inline-flex items-center gap-3 rounded-lg bg-gradient-to-r from-[#2563EB] to-[#22D3EE] px-6 py-3.5 text-sm font-semibold text-white shadow-lg shadow-[#2563EB]/20 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-[#22D3EE]/25"
+                            className="hero-primary-btn group inline-flex items-center gap-4 rounded-lg bg-[#D96535] px-6 py-3.5 text-sm font-semibold text-white"
                         >
-                            View My Work
-
-                            <span className="transition-transform duration-300 group-hover:translate-x-1">
-                                →
+                            {hero.primary}
+                            <span
+                                className="hero-arrow text-lg transition-transform duration-300"
+                                aria-hidden="true"
+                            >
+                                ↗
                             </span>
                         </a>
 
                         <a
                             href="#contact"
-                            className="group inline-flex items-center gap-3 rounded-lg border border-white/10 bg-white/[0.03] px-6 py-3.5 text-sm font-semibold text-white backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-[#22D3EE]/30 hover:bg-[#22D3EE]/5 hover:shadow-lg hover:shadow-[#22D3EE]/5"
+                            className="hero-secondary-btn group inline-flex items-center gap-3 rounded-lg border border-[#D5B895]/25 px-6 py-3.5 text-sm font-semibold text-[#F4EBDD]"
                         >
-                            Let's Talk
-
-                            <span className="transition-transform duration-300 group-hover:translate-x-0.5">
-                                ↗
+                            {hero.secondary}
+                            <span
+                                className="transition-transform duration-300 group-hover:translate-x-1"
+                                aria-hidden="true"
+                            >
+                                {isArabic ? "←" : "→"}
                             </span>
                         </a>
-
                     </div>
 
-                    {/* ================= SOCIAL ================= */}
-                    <div className="mt-9 flex flex-wrap items-center gap-5 sm:mt-10">
-
-                        <span className="text-[10px] uppercase tracking-[0.25em] text-slate-600">
-                            Let's connect
+                    {/* Professional development */}
+                    <div className="hero-reveal hero-delay-6 mt-9 flex flex-wrap items-center gap-x-5 gap-y-3 border-t border-white/10 pt-5">
+                        <span className="text-xs uppercase tracking-[0.12em] text-[#8F8172]">
+                            {isArabic ? "التطوير المهني" : "Professional Development"}
                         </span>
 
-                        <div className="h-px w-8 bg-white/10" />
+                        {["ITI", "DEPI"].map((name) => (
+                            <span
+                                key={name}
+                                className="flex items-center gap-2 text-sm text-[#D5B895]"
+                            >
+                                <span className="h-1 w-1 rounded-full bg-[#D96535]" />
+                                {name}
+                            </span>
+                        ))}
+                    </div>
 
+                    {/* Social links */}
+                    <div className="hero-reveal hero-delay-6 mt-5 flex items-center gap-5">
                         <a
                             href="https://github.com/AmalMansour19"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-sm text-slate-400 transition-colors duration-300 hover:text-[#22D3EE]"
+                            className="hero-social-link text-sm text-[#B6A99A]"
                         >
-                            GitHub
+                            GitHub <span aria-hidden="true">↗</span>
                         </a>
+
+                        <span className="h-4 w-px bg-white/15" />
 
                         <a
                             href="https://www.linkedin.com/in/amalmansour20/"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-sm text-slate-400 transition-colors duration-300 hover:text-[#22D3EE]"
+                            className="hero-social-link text-sm text-[#B6A99A]"
                         >
-                            LinkedIn
+                            LinkedIn <span aria-hidden="true">↗</span>
                         </a>
-
                     </div>
                 </div>
 
-                {/* ================= RIGHT VISUAL ================= */}
-                <div className="relative flex min-h-[390px] items-center justify-center sm:min-h-[470px] lg:min-h-[600px]">
+                {/* Portrait */}
+                <div className="hero-portrait-wrap relative order-1 mx-auto w-full max-w-[320px] sm:max-w-[360px] lg:order-2 lg:max-w-[400px] xl:max-w-[430px]">
+                    <div
+                        className="hero-ring pointer-events-none absolute -right-4 -top-4 h-28 w-28 rounded-tr-[2rem] border-r border-t border-[#D96535]/50 sm:-right-6 sm:-top-6 sm:h-36 sm:w-36"
+                        aria-hidden="true"
+                    />
 
-                    {/* Main Glow */}
-                    <div className="absolute h-[280px] w-[280px] rounded-full bg-[#2563EB]/20 blur-[100px] sm:h-[430px] sm:w-[430px]" />
+                    <div
+                        className="hero-ring hero-ring-bottom pointer-events-none absolute -bottom-4 -left-4 h-28 w-28 rounded-bl-[2rem] border-b border-l border-[#D5B895]/40 sm:-bottom-6 sm:-left-6 sm:h-36 sm:w-36"
+                        aria-hidden="true"
+                    />
 
-                    {/* Secondary Glow */}
-                    <div className="absolute h-[180px] w-[180px] translate-x-16 rounded-full bg-[#22D3EE]/10 blur-[90px] sm:h-[260px] sm:w-[260px]" />
+                    <div className="hero-photo relative overflow-hidden rounded-[1.5rem] border border-[#D5B895]/20 bg-[#29221C]">
+                        <img
+                            src="/aml.png"
+                            alt={
+                                isArabic
+                                    ? "أمل منصور - مطوّرة واجهات أمامية"
+                                    : "Amal Mansour — React Frontend Developer"
+                            }
+                            fetchPriority="high"
+                            className="block aspect-[4/5] w-full object-cover object-center"
+                        />
 
-                    {/* Orbit */}
-                    <div className="absolute h-[310px] w-[310px] rounded-full border border-[#22D3EE]/10 sm:h-[500px] sm:w-[500px]" />
+                        <div
+                            className="hero-photo-shine pointer-events-none absolute inset-0"
+                            aria-hidden="true"
+                        />
 
-                    <div className="absolute h-[240px] w-[240px] rounded-full border border-[#2563EB]/10 sm:h-[390px] sm:w-[390px]" />
+                        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-[#171411]/45 to-transparent" />
+                    </div>
 
-                    {/* Orbit Dots */}
-                    <div className="absolute right-[10%] top-[18%] h-3 w-3 rounded-full bg-[#22D3EE] shadow-[0_0_22px_#22D3EE]" />
+                    {/* Photo caption */}
+                    <div className="mt-5 flex flex-wrap items-center justify-between gap-3 border-b border-[#D5B895]/20 pb-4">
+                        <div>
+                            <p className="text-sm font-medium tracking-wide text-[#E7D7C4]">
+                                Amal Mansour
+                            </p>
 
-                    <div className="absolute bottom-[17%] left-[12%] h-2.5 w-2.5 rounded-full bg-[#2563EB] shadow-[0_0_18px_#2563EB]" />
-
-                    <div className="absolute left-[7%] top-[34%] h-2 w-2 rounded-full bg-[#10B981] shadow-[0_0_15px_#10B981]" />
-
-                    {/* ================= MONITOR ================= */}
-                    <div className="relative z-10 w-full max-w-[520px]">
-
-                        {/* Floating React Badge */}
-                        <div className="absolute -right-1 -top-9 z-20 flex h-14 w-14 rotate-6 items-center justify-center rounded-2xl border border-[#22D3EE]/25 bg-[#0D131D]/95 shadow-[0_15px_45px_rgba(34,211,238,0.15)] backdrop-blur-xl sm:-right-5 sm:-top-14 sm:h-20 sm:w-20">
-                            <span className="text-2xl font-bold text-[#22D3EE] sm:text-3xl">
-                                ⚛
-                            </span>
+                            <p className="mt-1 text-xs text-[#A99A89]">
+                                {isArabic ? "تطوير الواجهات الأمامية" : "Frontend Development"}
+                            </p>
                         </div>
 
-                        {/* Floating Code Badge */}
-                        <div className="absolute -bottom-4 -left-2 z-20 flex h-12 w-12 -rotate-6 items-center justify-center rounded-xl border border-[#2563EB]/25 bg-[#0D131D]/95 shadow-[0_15px_40px_rgba(37,99,235,0.15)] backdrop-blur-xl sm:-left-8 sm:h-16 sm:w-16">
-                            <span className="font-mono text-lg font-bold text-[#2563EB] sm:text-xl">
-                                {"</>"}
-                            </span>
-                        </div>
-
-                        {/* Monitor */}
-                        <div className="rounded-2xl border border-white/10 bg-[#0C111A]/95 p-2 shadow-[0_25px_80px_rgba(0,0,0,0.55)] backdrop-blur-xl sm:rounded-3xl sm:p-3">
-
-                            {/* Screen */}
-                            <div className="overflow-hidden rounded-xl border border-white/5 bg-[#080B12] shadow-inner shadow-black/30 sm:rounded-2xl">
-
-                                {/* Browser Top */}
-                                <div className="flex h-9 items-center justify-between border-b border-white/5 px-4 sm:h-11">
-
-                                    <div className="flex gap-1.5">
-                                        <span className="h-2 w-2 rounded-full bg-red-400/60" />
-                                        <span className="h-2 w-2 rounded-full bg-yellow-400/60" />
-                                        <span className="h-2 w-2 rounded-full bg-green-400/60" />
-                                    </div>
-
-                                    <div className="rounded-md border border-white/5 bg-white/[0.02] px-5 py-1">
-                                        <span className="text-[8px] text-slate-600 sm:text-[9px]">
-                                            amal.dev
-                                        </span>
-                                    </div>
-
-                                    <span className="text-[8px] text-slate-700">
-                                        ⋮
-                                    </span>
-
-                                </div>
-
-                                {/* Screen Content */}
-                                <div className="grid min-h-[235px] grid-cols-[1fr_1.15fr] gap-3 p-4 sm:min-h-[330px] sm:gap-4 sm:p-7">
-
-                                    {/* Code */}
-                                    <div className="flex flex-col justify-center">
-
-                                        <p className="font-mono text-[8px] text-slate-700 sm:text-[9px]">
-                                            01
-                                        </p>
-
-                                        <p className="mt-3 font-mono text-[9px] sm:text-xs">
-                                            <span className="text-[#22D3EE]">
-                                                const
-                                            </span>{" "}
-                                            <span className="text-white">
-                                                developer
-                                            </span>{" "}
-                                            <span className="text-slate-600">
-                                                =
-                                            </span>
-                                        </p>
-
-                                        <p className="mt-2 font-mono text-[9px] sm:text-xs">
-                                            <span className="text-[#10B981]">
-                                                {"{"}
-                                            </span>
-                                        </p>
-
-                                        <div className="ml-2 mt-2 space-y-2 font-mono text-[7px] sm:ml-3 sm:text-[10px]">
-
-                                            <p>
-                                                <span className="text-slate-600">
-                                                    name:
-                                                </span>{" "}
-                                                <span className="text-[#22D3EE]">
-                                                    "Amal"
-                                                </span>
-                                            </p>
-
-                                            <p>
-                                                <span className="text-slate-600">
-                                                    role:
-                                                </span>{" "}
-                                                <span className="text-[#22D3EE]">
-                                                    "React Developer"
-                                                </span>
-                                            </p>
-
-                                            <p>
-                                                <span className="text-slate-600">
-                                                    focus:
-                                                </span>{" "}
-                                                <span className="text-[#22D3EE]">
-                                                    "Frontend"
-                                                </span>
-                                            </p>
-
-                                        </div>
-
-                                        <p className="mt-2 font-mono text-[9px] text-[#10B981]">
-                                            {"}"}
-                                        </p>
-
-                                    </div>
-
-                                    {/* UI Preview */}
-                                    <div className="relative flex items-center justify-center">
-
-                                        <div className="relative w-full max-w-[170px] rounded-xl border border-[#2563EB]/20 bg-[#0D1422] p-3 shadow-lg shadow-[#2563EB]/10 sm:max-w-[220px]">
-
-                                            {/* Mini Navbar */}
-                                            <div className="flex items-center justify-between">
-                                                <div className="h-2 w-9 rounded bg-[#22D3EE]/40" />
-
-                                                <div className="h-2 w-5 rounded bg-white/10" />
-                                            </div>
-
-                                            {/* Mini Hero */}
-                                            <div className="mt-6 sm:mt-7">
-
-                                                <div className="h-3 w-20 rounded bg-white/80 sm:w-24" />
-
-                                                <div className="mt-2 h-2 w-28 rounded bg-[#22D3EE]/50 sm:w-32" />
-
-                                                <div className="mt-4 h-6 w-16 rounded-md bg-gradient-to-r from-[#2563EB] to-[#22D3EE] sm:h-7 sm:w-20" />
-
-                                            </div>
-
-                                            {/* Cards */}
-                                            <div className="mt-6 grid grid-cols-2 gap-2 sm:mt-8">
-                                                <div className="h-12 rounded-lg border border-white/5 bg-white/[0.03] sm:h-16" />
-                                                <div className="h-12 rounded-lg border border-white/5 bg-white/[0.03] sm:h-16" />
-                                            </div>
-
-                                            {/* Inner Glow */}
-                                            <div className="pointer-events-none absolute -right-8 -top-8 h-20 w-20 rounded-full bg-[#22D3EE]/10 blur-2xl" />
-
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-
-                            {/* Monitor Stand */}
-                            <div className="mx-auto h-7 w-20 bg-gradient-to-b from-[#171E29] to-[#0B1018] sm:h-10 sm:w-28" />
-
-                            <div className="mx-auto h-2 w-28 rounded-full bg-[#1B2431] shadow-lg sm:w-40" />
-
-                        </div>
-
-                        {/* Floating Status */}
-                        <div className="absolute -bottom-9 right-0 rounded-xl border border-white/10 bg-[#0D131D]/95 px-3 py-2.5 shadow-[0_15px_45px_rgba(0,0,0,0.35)] backdrop-blur-xl sm:-right-5 sm:px-4 sm:py-3">
-
-                            <div className="flex items-center gap-3">
-
-                                <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#22D3EE]/10 text-[#22D3EE]">
-                                    ✦
-                                </span>
-
-                                <div>
-                                    <p className="text-[9px] text-slate-600">
-                                        Open to
-                                    </p>
-
-                                    <p className="text-xs font-semibold text-white">
-                                        freelance projects
-                                    </p>
-                                </div>
-
-                            </div>
-
-                        </div>
-
+                        <span className="hero-availability flex items-center gap-2 rounded-full border border-[#D5B895]/15 bg-[#D5B895]/[0.06] px-3 py-2 text-[11px] text-[#D5B895]">
+                            <span className="h-1.5 w-1.5 rounded-full bg-[#D96535]" />
+                            {hero.availability}
+                        </span>
                     </div>
                 </div>
             </div>
 
-            {/* ================= SCROLL INDICATOR ================= */}
-            <div className="absolute bottom-7 left-1/2 hidden -translate-x-1/2 flex-col items-center md:flex">
-
-                <span className="text-[9px] uppercase tracking-[0.35em] text-slate-600">
-                    Scroll to explore
-                </span>
-
-                <div className="mt-3 h-10 w-px bg-gradient-to-b from-[#22D3EE] to-transparent" />
-
-            </div>
+            {/* Scroll indicator */}
+            <a
+                href="#work"
+                className="hero-scroll-indicator absolute bottom-5 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 text-[10px] uppercase tracking-[0.22em] text-[#8F8172] lg:flex"
+                aria-label={hero.scroll}
+            >
+                <span>{hero.scroll}</span>
+                <span className="hero-scroll-line h-7 w-px bg-gradient-to-b from-[#D96535] to-transparent" />
+            </a>
         </section>
     );
 }
 
 export default Hero;
-
